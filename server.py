@@ -1,3 +1,4 @@
+from  datetime import datetime
 import json
 from flask import Flask,render_template,request,redirect,flash,url_for
 
@@ -28,10 +29,12 @@ def index():
 def showSummary():
     try:
         club = [club for club in clubs if club['email'] == request.form['email']][0]
-        return render_template('welcome.html',club=club,competitions=competitions)
+        todaysDate = datetime.now()
+        todaysDate = todaysDate.strftime("%Y-%m-%d %H:%M:%S")
+        return render_template('welcome.html',club=club,competitions=competitions,todaysDate=todaysDate)
     except IndexError:
         erreur = 1
-        return render_template('index.html',erreur=erreur)
+        return render_template('index.html',erreur=erreur,clubs=clubs)
 
 
 
